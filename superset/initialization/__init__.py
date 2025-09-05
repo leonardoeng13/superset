@@ -830,6 +830,17 @@ class SupersetAppInitializer:  # pylint: disable=too-many-public-methods
         # Flask-Compress
         Compress(self.superset_app)
 
+        # Initialize tenant context middleware if enabled
+        if self.config.get("ENABLE_TENANT_MIDDLEWARE", False):
+            try:
+                from superset.middleware import init_tenant_middleware
+                init_tenant_middleware(self.superset_app)
+                logger.info("Tenant middleware initialized successfully")
+            except ImportError:
+                logger.warning("Tenant middleware not available - multi-tenant features disabled")
+            except Exception as ex:
+                logger.error("Failed to initialize tenant middleware: %s", ex)
+
         # Talisman
         talisman_enabled = self.config["TALISMAN_ENABLED"]
         talisman_config = (

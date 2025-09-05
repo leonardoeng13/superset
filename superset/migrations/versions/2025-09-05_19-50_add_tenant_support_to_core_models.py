@@ -32,7 +32,7 @@ from superset.migrations.shared.utils import (
 )
 
 # revision identifiers, used by Alembic.
-revision = "2024-12-05_19-50_abc123def456"
+revision = "2025-09-05_19-50_add_tenant_support_to_core_models"
 down_revision = "c233f5365c9e"
 
 
